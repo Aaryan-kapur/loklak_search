@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { UserApiResponse } from "../../models/api-user-response";
-import { immutableSort } from "../../utils";
+import { Component, OnInit, Input } from '@angular/core';
+import { UserApiResponse } from '../../models/api-user-response';
+import { immutableSort } from '../../utils';
 
 @Component({
-	selector: "user-info-box",
-	templateUrl: "./user-info-box.component.html",
-	styleUrls: ["./user-info-box.component.scss"]
+	selector: 'user-info-box',
+	templateUrl: './user-info-box.component.html',
+	styleUrls: ['./user-info-box.component.scss']
 })
 export class UserInfoBoxComponent implements OnInit {
 	@Input() apiResponseUser: UserApiResponse;

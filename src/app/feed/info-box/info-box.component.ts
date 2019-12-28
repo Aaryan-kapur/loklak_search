@@ -1,16 +1,16 @@
-import { ApiResponseResult } from "./../../models/api-response";
-import { Component, OnChanges, Input } from "@angular/core";
-import { Observable } from "rxjs";
-import { Query } from "../../models";
-import { Store } from "@ngrx/store";
-import * as fromRoot from "../../reducers";
-import { hashtagRegExp, fromRegExp, mentionRegExp } from "../../utils/reg-exp";
-import { defaultUrlConfig } from "../../shared/url-config";
+import { ApiResponseResult } from './../../models/api-response';
+import { Component, OnChanges, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Query } from '../../models';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../reducers';
+import { hashtagRegExp, fromRegExp, mentionRegExp } from '../../utils/reg-exp';
+import { defaultUrlConfig } from '../../shared/url-config';
 
 @Component({
-	selector: "info-box",
-	templateUrl: "./info-box.component.html",
-	styleUrls: ["./info-box.component.scss"]
+	selector: 'info-box',
+	templateUrl: './info-box.component.html',
+	styleUrls: ['./info-box.component.scss']
 })
 export class InfoBoxComponent implements OnChanges {
 	@Input() public query: Query;
@@ -27,10 +27,10 @@ export class InfoBoxComponent implements OnChanges {
 	public topTwitterers;
 	public stringQuery;
 	public queryString;
-	public barChartLabels: string[] = ["0"];
-	public barChartType = "bar";
+	public barChartLabels: string[] = ['0'];
+	public barChartType = 'bar';
 	public barChartLegend = true;
-	public barChartData: any[] = [{ data: [0], label: "Tweet Frequency" }];
+	public barChartData: any[] = [{ data: [0], label: 'Tweet Frequency' }];
 	public barChartOptions: any = {
 		scaleShowVerticalLines: false,
 		responsive: true
@@ -48,16 +48,16 @@ export class InfoBoxComponent implements OnChanges {
 		if (hashtagRegExp.exec(this.stringQuery) !== null) {
 			// Check for hashtag this.stringQuery
 			this.queryString =
-				"%23" +
+				'%23' +
 				hashtagRegExp.exec(this.stringQuery)[1] +
-				"" +
+				'' +
 				hashtagRegExp.exec(this.stringQuery)[0];
 		} else if (fromRegExp.exec(this.stringQuery) !== null) {
 			// Check for from user this.stringQuery
-			this.queryString = "from%3A" + fromRegExp.exec(this.stringQuery)[1];
+			this.queryString = 'from%3A' + fromRegExp.exec(this.stringQuery)[1];
 		} else if (mentionRegExp.exec(this.stringQuery) !== null) {
 			// Check for mention this.stringQuery
-			this.queryString = "%40" + mentionRegExp.exec(this.stringQuery)[1];
+			this.queryString = '%40' + mentionRegExp.exec(this.stringQuery)[1];
 		} else {
 			// for other queries
 			this.queryString = this.stringQuery;
@@ -82,7 +82,7 @@ export class InfoBoxComponent implements OnChanges {
 			this.topHashtags = this.parseRawDataWithFrequency(stored);
 			this.areTopHashtagsAvailable = this.topHashtags.length > 0;
 			return this.topHashtags;
-		} else if (typeof statistics === "undefined") {
+		} else if (typeof statistics === 'undefined') {
 			this.topHashtags = [];
 			this.areTopHashtagsAvailable = false;
 			return this.topHashtags;
@@ -125,7 +125,7 @@ export class InfoBoxComponent implements OnChanges {
 			this.topTwitterers = sortable;
 			this.areTopTwitterersAvailable = true;
 			return this.topTwitterers;
-		} else if (typeof statistics === "undefined") {
+		} else if (typeof statistics === 'undefined') {
 			this.areTopTwitterersAvailable = false;
 			this.topTwitterers = [];
 			return this.topTwitterers;
@@ -159,7 +159,7 @@ export class InfoBoxComponent implements OnChanges {
 	public parseRawDataWithFrequency(stored) {
 		let topFrequencyData = [];
 		stored = stored.reduce(function(acc, curr) {
-			if (typeof acc[curr] === "undefined") {
+			if (typeof acc[curr] === 'undefined') {
 				acc[curr] = 1;
 			} else {
 				acc[curr] += 1;
@@ -168,7 +168,7 @@ export class InfoBoxComponent implements OnChanges {
 		}, []);
 		topFrequencyData = Object.keys(stored)
 			.map(key => key.trim())
-			.filter(key => key !== "")
+			.filter(key => key !== '')
 			.map(key => [key, stored[key]])
 			.sort((a, b) => b[1] - a[1])
 			.slice(0, 10);
@@ -193,20 +193,20 @@ export class InfoBoxComponent implements OnChanges {
 		const mentionStrings = [];
 		const createdStrings = [];
 		for (let i = 0; i < this.ApiResponseResult.length; i++) {
-			if (this.ApiResponseResult[i]["hashtags"].length !== 0) {
-				tagStrings.push(this.ApiResponseResult[i]["hashtags"]);
+			if (this.ApiResponseResult[i]['hashtags'].length !== 0) {
+				tagStrings.push(this.ApiResponseResult[i]['hashtags']);
 			}
-			if (this.ApiResponseResult[i]["screen_name"].length !== 0) {
+			if (this.ApiResponseResult[i]['screen_name'].length !== 0) {
 				screenStrings.push([
-					this.ApiResponseResult[i]["screen_name"],
-					this.ApiResponseResult[i]["user"]["profile_image_url_https"]
+					this.ApiResponseResult[i]['screen_name'],
+					this.ApiResponseResult[i]['user']['profile_image_url_https']
 				]);
 			}
-			if (this.ApiResponseResult[i]["mentions"].length !== 0) {
-				mentionStrings.push([this.ApiResponseResult[i]["mentions"]]);
+			if (this.ApiResponseResult[i]['mentions'].length !== 0) {
+				mentionStrings.push([this.ApiResponseResult[i]['mentions']]);
 			}
-			if (this.ApiResponseResult[i]["created_at"].length !== 0) {
-				createdStrings.push(this.ApiResponseResult[i]["created_at"]);
+			if (this.ApiResponseResult[i]['created_at'].length !== 0) {
+				createdStrings.push(this.ApiResponseResult[i]['created_at']);
 			}
 		}
 		this.sortHashtags(tagStrings);
